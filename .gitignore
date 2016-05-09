@@ -1,0 +1,11 @@
+composer.phar
+/vendor/
+
+# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock
+.sass-cache
+node_modules
+/members-list-module/*.map
+/*.sublime-project
+/*.sublime-workspace
