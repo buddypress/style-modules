@@ -11,8 +11,8 @@ The Project proposal was written up and published to BuddyPress's bpdevel site:
 This repo contains one example  - but fully functioning  - module directory (bp-members-list) . The ultimate purpose of the repo is to maintain the modules as seen in the repo _not_ to clone the repo or download the repo (unless ones in initial core dev work, in which case by all means do clone the repo to obtain the dir structure and grunt tools) Module authors and users would be submitting and downloading the individual module folders and files.
 
 Modules Listings:
-A listing of modules available for download may be seen on the repository wiki page:
-...
+Modules available for download are listed on our wiki:
+<a href="https://github.com/buddypress/style-modules/wiki/Style-Modules-Listings">**Style Modules Listings**</a>
 
 # BP Style Module authoring guidelines & installation instructions
 
