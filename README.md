@@ -28,6 +28,8 @@ This readme covers essential guidence for:
 ###Submitting###
 All submissions should be made by creating a ticket on [trac.buddypress] (https://buddypress.trac.wordpress.org/newticket) and selecting `Style Module` as the ticket type.
 
+_Any questions or problems related to creating a module may be raised on the style module repos issue tracker as a ticket:_
+
 Upload your folder(files) zipped complete with seperate SC & readme.md
 
 Add a brief description of your submissions styling purpose e.g _"styles the user message tables..."_
