@@ -106,40 +106,63 @@ e.g:
 		/*
 		* Check & build the required paths to the files
 		*/
-		function sm_module_path() {
+		function sm_module_parts() {
 
-		$sm_parts = array();
-		// Authors add your modules name
-		$module_name = '';
+			$sm_parts = array();
 
-		if( file_exists( get_stylesheet_directory() . '/buddypress/') ) :
-		 $sm_dir = get_stylesheet_directory_uri() . '/buddypress/style-modules/';
-		else:
-		 $sm_dir = get_stylesheet_directory_uri() . '/community/style-modules/';
-		endif;
+			########## AUTHOR CONFIG ##########
+			// Authors add your modules name & set whether your module has a JS file
+			$module_name = 'members-list-module';
+			// Does your module have a supporting JS file? ( bool true/false )
+			$js_support = false;
+			########## END AUTHOR CONFIG ##########
 
-		$sm_parts['sm_dir']       = $sm_dir;
-		$sm_parts['path_to_file'] = $sm_dir .  $module_name . '/';
-		$sm_parts['module_name']  = $module_name;
+			if( file_exists( get_stylesheet_directory() . '/buddypress/') ) :
+				$sm_dir = get_stylesheet_directory_uri() . '/buddypress/style-modules/';
+			else:
+				$sm_dir = get_stylesheet_directory_uri() . '/community/style-modules/';
+			endif;
 
-		return $sm_parts;
+			$sm_parts['sm_dir']       = $sm_dir;
+			$sm_parts['path_to_file'] = $sm_dir .  $module_name . '/';
+			$sm_parts['module_name']  = $module_name;
+			$sm_parts['js_support']   = $js_support;
+
+			return (object) $sm_parts;
 		}
 
 		function enqueue_module_style() {
-		 $sm_parts = sm_module_path();
-		 $dir  = $sm_parts['path_to_file'];
-		 $rtl = ( is_rtl() )? '-rtl' : '';
-		 $file = $sm_parts['module_name'];
+			$sm_parts = sm_module_parts();
+
+			if( empty( $sm_parts->module_name ) )
+			return false;
+
+			$dir  = $sm_parts->path_to_file;
+			$rtl  = ( is_rtl() )? '-rtl' : '';
+			$file = $sm_parts->module_name;
 			wp_enqueue_style( $file . '-styles',  $dir . $file . $rtl . '.css', array('bp-legacy-css'), false, 'screen' );
 		}
+
 		function enqueue_module_script() {
-		 $sm_parts = sm_module_path();
-		 $dir  = $sm_parts['path_to_file'];
-		 $file = $sm_parts['module_name'];
+			$sm_parts = sm_module_parts();
+
+			if( false === $sm_parts->js_support )
+			return false;
+
+			$dir  = $sm_parts->path_to_file;
+			$file = $sm_parts->module_name;
 			wp_enqueue_script( $file . '-script', $dir . $file . '.js', array('jquery'), false, true );
 		}
-		add_action('bp_enqueue_scripts', 'enqueue_module_style', 20);
-		add_action('bp_enqueue_scripts', 'enqueue_module_script');
+
+		function sm_load_files() {
+			if( !empty( sm_module_parts()->module_name ) ) {
+				add_action('bp_enqueue_scripts', 'enqueue_module_style', 20);
+
+				if( false !== sm_module_parts()->js_support )
+					add_action('bp_enqueue_scripts', 'enqueue_module_script', 20);
+			}
+		}
+		add_action('bp_after_setup_theme', 'sm_load_files');
 
 		-------------------------------------------------------------------------------
 
